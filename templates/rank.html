@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+{% block content %}
+<body>
+
+<div class="container">
+<a href="/" class="btn btn-danger btn-md" style="margin-top:10px">Powrót</a>
+    <h1 style="text-align:center"> Ranking podróżników </h1>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr style="color:#3aa; font-size:130%">
+      <th scope="col">#</th>
+      <th scope="col">Podróżnik</th>
+        <th scope="col">Odwiedzone</th>
+      <th scope="col">Dodane</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for z in zal%}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{z.user}}</td>
+      <td>{{z.name}}</td>
+
+      <td>{{z.id}}</td>
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Destinations</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Travello template project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/destinations.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/about.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/contact.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/destinations_responsive.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/about_responsive.css' %}">
+</head>
+{% block content %}
+<style>
+	.milestone_text{color:white;}
+	.footer
+{
+	padding-top: 50px;
+}
+</style>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header class="header" style="background: -webkit-linear-gradient(left, #3981af, #00c6cf)">
+		<div class="container" style="height:150px">
+			<div class="row">
+				<div class="col">
+					<div class="header_content d-flex flex-row align-items-center justify-content-start">
+						<div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
+							<div class="logo"><a href="/"><img src="{% static 'images/logo.png' %}"></a></div>
+							<nav class="main_nav">
+								<ul class="d-flex flex-row align-items-start justify-content-start">
+									<li class="active"><a href="/">Home</a></li>
+
+									{% if user.is_authenticated %}
+									<li><a href="/calc">Profil</a></li>
+									<li style="color:yellow">Hello, {{user.first_name }}</li>
+									<li><a href="/accounts/logout">Logout</a></li>
+
+									{% else %}
+									<li><a href="/accounts/register">Register</a></li>
+									<li><a href="/accounts/login">Login</a></li>
+
+									{% endif %}
+								</ul>
+							</nav>
+							<div class="header_phone ml-auto">Projekt zaliczeniowy</div>
+
+							<div class="hamburger ml-auto">
+								<i class="fa fa-bars" aria-hidden="true"></i>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</header>
+
+	<div class="home" style="height:550px">
+	</div>
+
+	<!-- Search -->
+
+	<div class="home_search">
+		<div class="container" style="bgcolor:red">
+			<div class="row" >
+				<div class="col" >
+					<div class="home_search_container"  style="background-color:white; margin-top:-50px;">
+						<div class="home_search_title" style="font-size:200%">Znadź coś dla siebie</div>
+						<div class="home_search_content"  style="background-color:#bcc; border-radius:6px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1);">
+
+							<form method="GET" action="" class="home_search_form">
+								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-lg-between justify-content-start">
+									<input type="text" name="q_nam" class="search_input search_input_1" placeholder="Nazwa" value="{{ request.GET.q }}">
+									<input type="text" name="q_aut" class="search_input search_input_2" placeholder="Dodane przez" value="{{ request.GET.q }}">
+									<input type="text" name="q_cit" class="search_input search_input_3" placeholder="Miasto" value="{{ request.GET.q }}">
+									<input type="text" name="q_voi" class="search_input search_input_4" placeholder="Województwo" value="{{ request.GET.q }}">
+									<button  class="btn btn-info" style="height:50px; width:100px;">filtruj</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Destinations -->
+
+	<div class="destinations" id="destinations" style="margin-top:-170px">
+		<div class="container">
+			<div class="row">
+				<div class="col text-center">
+					<div class="section_subtitle">Wybierz coś dla siebie</div>
+					<div class="section_title"><h2>Wszystkie miejsca</h2></div>
+				</div>
+			</div>
+
+			<div class="row destinations_row">
+				<div class="col">
+					<div class="destinations_container item_grid" >
+
+						<!-- Destination -->
+						{% for dest in dests %}
+						<div class="destination item" style="height:650px;">
+							<div class="destination_image">
+								<a href="https://www.google.com/maps/place/{{dest.city}}/"><img src="{{dest.img.url}}" alt="zdjęcie"></a>
+								{% if dest.offer == True %}
+								<div class="spec_offer text-center"><a href="#">Oferta specjalna</a></div>
+								{% endif %}
+							</div>
+							<div class="destination_content" >
+								<div class="destination_title"><a href="/destinations">{{ dest.name }}</a></div>
+								<div class="destination_subtitle"><p>Dodał: {{ dest.author}}</p></div>
+								<div class="destination_price"><h5>{{ dest.desc }}</h5></div>
+								<hr>
+								lokalizacja :<br>
+								<div class="destination_subtitle"><p>{{ dest.city }}, {{ dest.street }}, {{ dest.voivodeship }}</p></div>
+								<hr>
+								<div class="destination_subtitle"><p>Dla {{ dest.num_people }} osób</p></div>
+
+								{% if dest.duration > 60 %}
+
+									<div class="destination_subtitle"><p>Czas trwania: {{ dest.duration}} h</p></div>
+								{% else %}
+									<div class="destination_subtitle"><p>Czas trwania: {{ dest.duration }} min</p></div>
+								{% endif %}
+								<div class="destination_price">Od {{ dest.price }} zł</div>
+								{% if user.is_authenticated %}
+								<form action="add_hist" method="post" style="padding-top:15px">
+									{% csrf_token %}
+										<input type="hidden" name="user" class="form-control"  value="{{user.username}}">
+                                      	<input type="hidden" name="name" class="form-control"  value="{{ dest.name }}">
+                                      	<input type="hidden" name="city" class="form-control"   value="{{ dest.city }}">
+                                      	<input type="hidden" name="voivodeship" class="form-control"  value="{{dest.voivodeship}}">
+                                      	<input type="date" name="date" class="form-control" placeholder="Data"  >
+
+										<button  class="btn btn-success" style="border-radius:29px;margin-top:5px;font-size:20px">&#10010;</button>
+									</form>
+									{% endif %}
+							</div>
+						</div>
+						{% endfor %}
+
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+    <!-- FORM DODAJ NOWĄ -->
+	{% if user.is_authenticated %}
+<hr>
+    <div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0" style="text-align:center">
+        <button class="btn btn-info btn-lg" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Nowa atrakcja &#8659;
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+
+
+        <div id="er" style=" height:900px;">
+            <div class="container">
+                <div id="login-row" class="row justify-content-center align-items-center">
+                    <div id="login-column" class="col-md-6">
+                        <div id="login-box" class="col-md-12">
+
+                            <form id="login-form" action="dodaj" method="post">
+                                {% csrf_token %}
+                                <h3 class="text-center text-info">Dodaj nową lokalizację</h3><br>
+
+                                    <input type="hidden" name="author" class="form-control" id="static" value="{{user.username}}"><br>
+
+                                    <input type="text" name="name"  id="name" class="form-control" placeholder="Nazwa"><br>
+
+                                    <input type="file" name="img" class="form-control" id="img"><br>
+
+                                    <input type="text" name="desc" id="last_name" class="form-control"placeholder="Opis"><br>
+
+                                    <input type="text" name="city"  id="city" class="form-control" placeholder="Miasto"><br>
+
+                                    <input type="text" name="street"  id="username" class="form-control"placeholder="Ulica"><br>
+
+                                    <input type="text" name="voivodeship"  id="voivod" class="form-control"placeholder="Województwo"><br>
+
+                                    <label> oferta specjalna </label>
+                                    <input type="text" name="offer"  id="offer" class="form-control" placeholder="True/False"><br>
+
+                                    <input type="number" name="price" id="email" class="form-control"placeholder="Cena"><br>
+
+                                    <input type="text" name="duration"  id="duration" class="form-control"placeholder="Czas trwania(min)"><br>
+
+                                    <input type="text" name="num_people"  id="num_people" class="form-control"placeholder="Ilosc osób"><br>
+
+                                    <input type="Submit" name="submit" class="btn btn-info btn-lg btn-block" value="Dodaj"><br>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+          <!-- /FORM -->
+      </div>
+
+    </div>
+    </div>
+</div>
+    <!-- /COLLAPSE -->
+
+{% endif %}
+<hr>
+
+	<!-- Footer -->
+
+	<footer class="footer" >
+		<div class="parallax_background parallax-window" data-parallax="scroll" style="background: -webkit-linear-gradient(left, #3981af, #00c6cf)" data-speed="0.8"></div>
+		<div class="container">
+
+			<div class="row footer_contact_row">
+				<div class="col-xl-10 offset-xl-1">
+					<div class="row">
+
+					<div class="container">
+						<div class="row">
+							<!-- Ikonka -->
+							<div class="col-lg-6 milestone_col">
+								<div class="milestone text-center">
+									<div class="milestone_icon"><img src="{% static 'images/sign.svg' %}" alt=""></div>
+									<div class="milestone_counter" data-end-value="100">{{ dests_num }}</div>
+									<div class="footer_contact_title">Zapisanych atrakcji</div>
+								</div>
+							</div>
+							<div class="col-lg-6 milestone_col">
+								<div class="milestone text-center">
+									<div class="milestone_icon"><img src="{% static 'images/trekking.svg' %}" alt=""></div>
+									<div class="milestone_counter" data-end-value="50">{{ user_num }}</div>
+									<div class="footer_contact_title">Użytkowników</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col text-center"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> </div>
+	</footer>
+</div>
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/destinations.js' %}"></script>
+</body>
+</html>
+{% endblock %}

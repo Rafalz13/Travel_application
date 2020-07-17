@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+
+<style>
+    body {
+  margin: 0;
+  background: -webkit-linear-gradient(left, #3981af, #00c6cf);
+  height: 100vh;
+}
+.form-control{ margin-bottom:-12px;
+                margin-top:-8px}
+
+#login .container #login-row #login-column #login-box {
+  margin-top: 60px;
+  max-width: 650px;
+  height: 650px;
+  border: 1px solid #9C9C9C;
+  border-radius:8px;
+  background-color: #e2e2e2;
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+
+#message {
+    margin-left:43% ;
+}
+</style>
+
+     <div id="login">
+        <div class="logo" style="text-align:center; margin-top:10px; margin-bottom:-20px"><a href="/"><img src="{% static 'images/logo.png' %}"></a></div>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+
+                        <form id="login-form" action="register" method="post">
+                            {% csrf_token %}
+                            <h3 class="text-center text-info" style="height:20px">Panel rejestracji</h3><br>
+                                <label  class="text-info">Imie:</label>
+                                <input type="text" name="first_name" id="first_name" class="form-control"><br>
+
+                                <label  class="text-info">Nazwisko:</label>
+                                <input type="text" name="last_name" id="last_name" class="form-control"><br>
+
+                                <label  class="text-info">Nazwa użytkownika:</label>
+                                <input type="text" name="username" id="username" class="form-control"><br>
+
+                                <label  class="text-info">e-mail:</label>
+                                <input type="text" name="email" id="email" class="form-control"><br>
+
+                                <label  class="text-info">Hasło:</label>
+                                <input type="password" name="password1" id="password1" class="form-control"><br>
+
+                                <label  class="text-info">Powtórz hasło:</label>
+                                <input type="password" name="password2" id="password2" class="form-control"><br>
+
+                                <input type="Submit" name="submit" class="btn btn-info btn-lg btn-block" value="zarejestruj"><br>
+                                <div class="button" style="margin-left:42%">
+                                <a href="/" class="btn btn-danger btn-md">Powrót</a>
+                                    </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="message">
+    {% for message in messages %}
+    <h3 style=" color:red;"> {{ message }} </h3>
+    {% endfor %}
+    </div>
+
+</body>
+</html>

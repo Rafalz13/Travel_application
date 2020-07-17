@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+<style>
+    body {
+  margin: 0;
+  background: -webkit-linear-gradient(left, #3981af, #00c6cf);
+  height: 100vh;
+}
+#login .container #login-row #login-column #login-box {
+  margin-top: 120px;
+  max-width: 600px;
+  height: 410px;
+  border: 1px solid #9C9C9C;
+  border-radius: 8px;
+  background-color: #e2e2e2;
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+#message {
+    margin-left:43% ;
+
+}
+</style>
+
+     <div id="login">
+        <div class="logo" style="text-align:center; margin-top:10px"><a href="/"><img src="{% static 'images/logo.png' %}"></a></div>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+
+                        <form id="login-form" action="login" method="post">
+                            {% csrf_token %}
+                            <h3 class="text-center text-info">Panel logowania</h3><br>
+                                <label for="username" class="text-info">Nazwa użytkownika:</label><br>
+                                <input type="text" name="username" id="username" class="form-control"><br>
+
+                                <label for="password" class="text-info">Hasło:</label><br>
+                                <input type="password" name="password" id="password" class="form-control"><br>
+
+                                <input type="submit" name="submit" class="btn btn-info btn-lg btn-block" value="zaloguj" style="margin-top: 2%">
+                            <div class="button" ><br>
+                                <a href="/" class="btn btn-danger btn-md" style="margin-left: 42%">Powrót</a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="message">
+    {% for message in messages %}
+    <h3 style=" color:red;"> {{ message }} </h3>
+    {% endfor %}
+    </div>
+</body>
+</html>
