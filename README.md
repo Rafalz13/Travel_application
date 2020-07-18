@@ -11,6 +11,6 @@ These instructions will get you a copy of the project up and running on your loc
 * Activate virtual env ```travel\Scripts\Activate.bat (Windows)``` 
 * Install Django ```pip install django ```
 * Start Django server:  ```py manage.py runserver ```
-* creating an application in the project, a new folder is created ```py manage.py startapp [app_name]```
+
 After ```py manage.py runserver``` you can see application on localhost ```127.0.0.1:8080 ``` 
 
